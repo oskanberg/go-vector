@@ -55,6 +55,13 @@ func (s *Vector2D) Multiplied(by float64) *Vector2D {
 	}
 }
 
+func (s *Vector2D) Divided(by float64) *Vector2D {
+	return &Vector2D{
+		X: s.X / by,
+		Y: s.Y / by,
+	}
+}
+
 func (s *Vector2D) Wrap(XLimit, YLimit float64) *Vector2D {
 	newX := math.Mod(s.X, XLimit)
 	if newX < 0 {
