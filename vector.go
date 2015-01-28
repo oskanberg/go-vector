@@ -99,6 +99,24 @@ func (s *Vector2D) Wrap(XLimit, YLimit float64) *Vector2D {
 	}
 }
 
+func (s *Vector2D) Contain(XLimit, YLimit float64) *Vector2D {
+
+	newX := math.Min(s.X, XLimit)
+	if newX < 0 {
+		newX = 0
+	}
+
+	newY := math.Min(s.Y, YLimit)
+	if newY < 0 {
+		newY = 0
+	}
+
+	return &Vector2D{
+		X: newX,
+		Y: newY,
+	}
+}
+
 func NewVector2d(x, y float64) *Vector2D {
 	return &Vector2D{
 		X: x,
