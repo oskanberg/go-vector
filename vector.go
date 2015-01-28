@@ -18,7 +18,11 @@ func (s *Vector2D) Normalised() *Vector2D {
 }
 
 func (s *Vector2D) Magnitude() float64 {
-	return math.Sqrt((s.X * s.X) + (s.Y * s.Y))
+	l2 := (s.X * s.X) + (s.Y * s.Y)
+	if l2 == 0 {
+		return 0
+	}
+	return math.Sqrt(l2)
 }
 
 func (s *Vector2D) Subtract(v *Vector2D) *Vector2D {
