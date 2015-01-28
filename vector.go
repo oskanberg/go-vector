@@ -11,6 +11,12 @@ type Vector2D struct {
 
 func (s *Vector2D) Normalised() *Vector2D {
 	mag := s.Magnitude()
+	if mag == 0 {
+		return &Vector2D{
+			X: s.X,
+			Y: s.Y,
+		}
+	}
 	return &Vector2D{
 		X: s.X / mag,
 		Y: s.Y / mag,
