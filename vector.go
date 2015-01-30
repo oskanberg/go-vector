@@ -31,6 +31,10 @@ func (s *Vector2D) Magnitude() float64 {
 	return math.Sqrt(l2)
 }
 
+func (s *Vector2D) MagnitudeSquared() float64 {
+	return (s.X * s.X) + (s.Y * s.Y)
+}
+
 func (s *Vector2D) Subtract(v *Vector2D) *Vector2D {
 	return &Vector2D{
 		X: s.X - v.X,
@@ -73,29 +77,38 @@ func (s *Vector2D) Divided(by float64) *Vector2D {
 }
 
 func (s *Vector2D) Wrap(XLimit, YLimit float64) *Vector2D {
-	newX := math.Mod(s.X, XLimit)
+	var newX float64 = math.Mod(s.X, XLimit)
+	var newY float64 = math.Mod(s.Y, YLimit)
+
 	if newX < 0 {
-		newX = XLimit - newX
+		newX = newX + XLimit
 	}
-
-	newY := math.Mod(s.Y, YLimit)
 	if newY < 0 {
-		newY = YLimit - newY
+		newY = newY + YLimit
 	}
-
-	// newX := math.Min(s.X, XLimit)
-	// if newX < 0 {
-	// 	newX = 0
-	// }
-
-	// newY := math.Min(s.Y, YLimit)
-	// if newY < 0 {
-	// 	newY = 0
-	// }
 
 	return &Vector2D{
 		X: newX,
 		Y: newY,
+	}
+}
+
+// get the minimum distance between two points, taking into account wrapping
+func (s *Vector2D) WrappedDistanceVector(to *Vector2D, XLimit, YLimit float64) *Vector2D {
+
+	dX := math.Mod(XLimit+to.X-s.X, XLimit)
+	if dX > XLimit/2 {
+		dX = dX - XLimit
+	}
+
+	dY := math.Mod(YLimit+to.Y-s.Y, YLimit)
+	if dY > YLimit/2 {
+		dY = dY - YLimit
+	}
+
+	return &Vector2D{
+		X: dX,
+		Y: dY,
 	}
 }
 
